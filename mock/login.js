@@ -71,14 +71,20 @@ const mock = [
             children: [
               {
                 id: '3-1',
-                title: '401',
-                path: '/error/401',
+                title: '403',
+                path: '/403',
                 type: '1'
               },
               {
                 id: '3-2',
                 title: '404',
-                path: '/error/404',
+                path: '/404',
+                type: '1'
+              },
+              {
+                id: '3-3',
+                title: '500',
+                path: '/500',
                 type: '1'
               }
             ]
