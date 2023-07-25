@@ -15,7 +15,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { Layout } from 'ant-design-vue'
-import Menu from './LayMenu.vue'
+import Menu from './Menu.vue'
 import axios from '@/utils/axios'
 
 const { Sider } = Layout
