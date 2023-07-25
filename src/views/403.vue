@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <Result status="500" title="500" sub-title="Sorry, you are not authorized to access this page.">
+    <Result status="403" title="403" sub-title="Sorry, you are not authorized to access this page.">
       <template #extra>
         <Button type="primary">Back Home</Button>
       </template>
