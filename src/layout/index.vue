@@ -1,5 +1,5 @@
 <template>
-  <Layout style="height: 100vh">
+  <Layout style="min-height: 100vh">
     <Sider :collapsed="collapsed" />
     <Layout>
       <Header :collapsed="collapsed" @setCollapsed="(val) => (collapsed = val)" />
