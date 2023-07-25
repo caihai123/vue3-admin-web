@@ -8,12 +8,7 @@ module.exports = {
     ecmaVersion: 'latest'
   },
   rules: {
-    'vue/multi-word-component-names': [
-      'error',
-      {
-        ignores: ['index']
-      }
-    ],
+    'vue/multi-word-component-names': 0,
     'vue/component-tags-order': [
       'error',
       {
