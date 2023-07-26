@@ -30,14 +30,17 @@ const getItem = function ({ id, type, title, path, children, icon }) {
 
 <script setup>
 import { onMounted } from 'vue'
+import { storeToRefs } from 'pinia'
 import { Menu, Skeleton } from 'ant-design-vue'
 import router from '@/router/index'
 import useAsyncMenuStore from '@/stores/async-routes'
 
-const { menu, updateMenu } = useAsyncMenuStore()
+const asyncMenuStore = useAsyncMenuStore()
+const { updateMenu } = asyncMenuStore
+const { menu } = storeToRefs(asyncMenuStore)
 
 const menuList = computed(() => {
-  const initialMenuList = menu.data || []
+  const initialMenuList = menu.value.data || []
   return initialMenuList.map((item) => getItem(item))
 })
 
