@@ -6,7 +6,7 @@
     :title="false"
     style="padding: 20px"
   >
-    <Menu :items="menuList" mode="inline" @click="handleClick" />
+    <Menu :items="menuList" mode="inline" :selectedKeys="[activeMenu]" @click="handleClick" />
   </Skeleton>
 </template>
 
@@ -42,6 +42,8 @@ const menuList = computed(() => {
 })
 
 onMounted(() => updateMenu())
+
+const activeMenu = computed(() => router.currentRoute.value.path)
 
 const handleClick = function ({ key }) {
   router.push(key)
