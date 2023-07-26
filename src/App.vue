@@ -16,10 +16,12 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { computed } from 'vue'
 import { ConfigProvider, theme } from 'ant-design-vue'
+import useSystemStore from '@/stores/system'
 
-const isLight = ref(true)
+const systemStore = useSystemStore()
+const isLight = computed(() => systemStore.theme !== 'dark')
 </script>
 
 <style scoped></style>
