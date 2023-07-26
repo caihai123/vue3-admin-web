@@ -11,44 +11,44 @@
 </template>
 
 <script>
-import { h, computed } from 'vue'
-import * as icons from '@ant-design/icons-vue'
+import { h, computed } from 'vue';
+import * as icons from '@ant-design/icons-vue';
 
 // 动态渲染icon
 const antdIcon = function (icon) {
-  return icon && h(icons[icon])
-}
+  return icon && h(icons[icon]);
+};
 const getItem = function ({ id, type, title, path, children, icon }) {
   return {
     key: path || id,
     label: title,
     icon: icon ? antdIcon(icon) : '',
-    children: type === '2' ? (children || []).map((item) => getItem(item)) : undefined
-  }
-}
+    children: type === '2' ? (children || []).map((item) => getItem(item)) : undefined,
+  };
+};
 </script>
 
 <script setup>
-import { onMounted } from 'vue'
-import { storeToRefs } from 'pinia'
-import { Menu, Skeleton } from 'ant-design-vue'
-import router from '@/router/index'
-import useAsyncMenuStore from '@/stores/async-routes'
+import { onMounted } from 'vue';
+import { storeToRefs } from 'pinia';
+import { Menu, Skeleton } from 'ant-design-vue';
+import router from '@/router/index';
+import useAsyncMenuStore from '@/stores/async-routes';
 
-const asyncMenuStore = useAsyncMenuStore()
-const { updateMenu } = asyncMenuStore
-const { menu } = storeToRefs(asyncMenuStore)
+const asyncMenuStore = useAsyncMenuStore();
+const { updateMenu } = asyncMenuStore;
+const { menu } = storeToRefs(asyncMenuStore);
 
 const menuList = computed(() => {
-  const initialMenuList = menu.value.data || []
-  return initialMenuList.map((item) => getItem(item))
-})
+  const initialMenuList = menu.value.data || [];
+  return initialMenuList.map((item) => getItem(item));
+});
 
-onMounted(() => updateMenu())
+onMounted(() => updateMenu());
 
-const activeMenu = computed(() => router.currentRoute.value.path)
+const activeMenu = computed(() => router.currentRoute.value.path);
 
 const handleClick = function ({ key }) {
-  router.push(key)
-}
+  router.push(key);
+};
 </script>

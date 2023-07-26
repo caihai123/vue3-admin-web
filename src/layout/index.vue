@@ -12,16 +12,16 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { storeToRefs } from 'pinia'
-import { Layout, Spin } from 'ant-design-vue'
-import Header from './Header/index.vue'
-import Sider from './Sider/index.vue'
-import useAsyncMenuStore from '@/stores/async-routes'
+import { ref } from 'vue';
+import { storeToRefs } from 'pinia';
+import { Layout, Spin } from 'ant-design-vue';
+import Header from './Header/index.vue';
+import Sider from './Sider/index.vue';
+import useAsyncMenuStore from '@/stores/async-routes';
 
-const { menu } = storeToRefs(useAsyncMenuStore())
+const { menu } = storeToRefs(useAsyncMenuStore());
 
-const collapsed = ref(false)
+const collapsed = ref(false);
 </script>
 
 <style scoped>

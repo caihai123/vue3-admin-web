@@ -20,22 +20,22 @@
 </template>
 
 <script setup>
-import { Layout, theme, Switch } from 'ant-design-vue'
-import useSystemStore from '@/stores/system'
+import { Layout, theme, Switch } from 'ant-design-vue';
+import useSystemStore from '@/stores/system';
 
-const { Header } = Layout
-const { token } = theme.useToken()
+const { Header } = Layout;
+const { token } = theme.useToken();
 
-const systemStore = useSystemStore()
+const systemStore = useSystemStore();
 
 // trigger 按钮相关
-import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue'
+import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue';
 const props = defineProps({
   collapsed: {
     type: Boolean,
-    required: true
-  }
-})
+    required: true,
+  },
+});
 </script>
 
 <style scoped>

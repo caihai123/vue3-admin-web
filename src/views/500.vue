@@ -9,8 +9,8 @@
 </template>
 
 <script setup>
-import { Result, Button } from 'ant-design-vue'
-import router from '@/router/index'
+import { Result, Button } from 'ant-design-vue';
+import router from '@/router/index';
 </script>
 
 <style scoped>

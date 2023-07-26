@@ -17,18 +17,18 @@
 </template>
 
 <script setup>
-import { Layout } from 'ant-design-vue'
-import Menu from './Menu.vue'
+import { Layout } from 'ant-design-vue';
+import Menu from './Menu.vue';
 
-const { Sider } = Layout
+const { Sider } = Layout;
 const props = defineProps({
   collapsed: {
     type: Boolean,
-    required: true
-  }
-})
+    required: true,
+  },
+});
 
-const collapsedWidth = 64 // 收起时的宽度
+const collapsedWidth = 64; // 收起时的宽度
 </script>
 
 <style scoped>

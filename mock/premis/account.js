@@ -1,4 +1,4 @@
-import Mock from 'mockjs'
+import Mock from 'mockjs';
 
 const mock = [
   {
@@ -6,7 +6,7 @@ const mock = [
     url: '/api/account/page',
     type: 'post',
     handler({ body }) {
-      const { pageIndex, pageSize = 10 } = JSON.parse(body)
+      const { pageIndex, pageSize = 10 } = JSON.parse(body);
 
       return {
         result: {
@@ -18,17 +18,17 @@ const mock = [
               'gender|1': [1, 2],
               phone: /^(?:(?:\+|00)86)?1[3-9]\d{9}$/,
               email: '@email',
-              'status|1': [0, 1]
+              'status|1': [0, 1],
             })
           ),
           total: 100,
-          pageIndex
+          pageIndex,
         },
         status: 'success',
-        msg: '成功！'
-      }
-    }
-  }
-]
+        msg: '成功！',
+      };
+    },
+  },
+];
 
-export default mock
+export default mock;

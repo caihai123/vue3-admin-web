@@ -1,11 +1,11 @@
-import Mock from 'mockjs'
+import Mock from 'mockjs';
 
 const mock = [
   {
     url: '/api/role/page',
     type: 'post',
     handler({ body }) {
-      const { pageIndex, pageSize = 10 } = JSON.parse(body)
+      const { pageIndex, pageSize = 10 } = JSON.parse(body);
 
       return {
         result: {
@@ -14,17 +14,17 @@ const mock = [
               id: '@guid',
               roleName: `角色名称-${pageIndex * pageSize - pageSize + i + 1}`,
               description: '@csentence',
-              'status|1': [0, 1]
+              'status|1': [0, 1],
             })
           ),
           total: 100,
-          pageIndex
+          pageIndex,
         },
         status: 'success',
-        msg: '成功！'
-      }
-    }
-  }
-]
+        msg: '成功！',
+      };
+    },
+  },
+];
 
-export default mock
+export default mock;
