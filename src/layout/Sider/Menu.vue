@@ -1,5 +1,5 @@
 <template>
-  <Menu :items="menuList" mode="inline" />
+  <Menu :items="menuList" mode="inline" @click="handleClick" />
 </template>
 
 <script>
@@ -21,17 +21,21 @@ const getItem = function ({ id, type, title, path, children, icon }) {
 </script>
 
 <script setup>
+import { onMounted } from 'vue'
 import { Menu } from 'ant-design-vue'
+import router from '@/router/index'
+import useAsyncMenuStore from '@/stores/async-routes'
 
-const props = defineProps({
-  menu: {
-    type: Object,
-    required: true
-  }
-})
+const { menu, updateMenu } = useAsyncMenuStore()
 
 const menuList = computed(() => {
-  const initialMenuList = props.menu.list || []
+  const initialMenuList = menu.data || []
   return initialMenuList.map((item) => getItem(item))
 })
+
+onMounted(() => updateMenu())
+
+const handleClick = function ({ key }) {
+  router.push(key)
+}
 </script>

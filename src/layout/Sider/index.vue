@@ -8,15 +8,13 @@
   >
     <div class="logo-bar"></div>
 
-    <Menu :menu="menu" />
+    <Menu />
   </Sider>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
 import { Layout } from 'ant-design-vue'
 import Menu from './Menu.vue'
-import axios from '@/utils/axios'
 
 const { Sider } = Layout
 const props = defineProps({
@@ -27,21 +25,6 @@ const props = defineProps({
 })
 
 const collapsedWidth = 64 // 收起时的宽度
-const menu = ref({
-  list: [],
-  loading: false
-})
-onMounted(() => {
-  menu.value.loading = true
-  axios
-    .get('/api/get-menu-all')
-    .then((value) => {
-      menu.value.list = value.result || []
-    })
-    .finally(() => {
-      menu.value.loading = false
-    })
-})
 </script>
 
 <style scoped>

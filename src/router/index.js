@@ -9,35 +9,43 @@ const router = createRouter({
       name: 'layout',
       component: Layout,
       redirect: '/index',
-      children: [
-        {
-          path: '/index',
-          name: 'index',
-          component: () => import('@/views/index.vue')
-        },
-        {
-          path: '/about',
-          name: 'about',
-          component: () => import('@/views/AboutView.vue')
-        },
-        {
-          path: '/403',
-          name: '403',
-          component: () => import('@/views/403.vue')
-        },
-        {
-          path: '/404',
-          name: '404',
-          component: () => import('@/views/404.vue')
-        },
-        {
-          path: '/500',
-          name: '500',
-          component: () => import('@/views/500.vue')
-        }
-      ]
+      children: []
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: () => import('@/views/login.vue'),
+      meta: { title: '登录页' }
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'NotFound',
+      component: Layout
     }
   ]
 })
 
 export default router
+
+export const asyncRoutes = [
+  {
+    path: '/index',
+    name: 'index',
+    component: () => import('@/views/index.vue')
+  },
+  {
+    path: '/403',
+    name: '403',
+    component: () => import('@/views/403.vue')
+  },
+  {
+    path: '/404',
+    name: '404',
+    component: () => import('@/views/404.vue')
+  },
+  {
+    path: '/500',
+    name: '500',
+    component: () => import('@/views/500.vue')
+  }
+]
