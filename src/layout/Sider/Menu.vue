@@ -1,5 +1,13 @@
 <template>
-  <Menu :items="menuList" mode="inline" @click="handleClick" />
+  <Skeleton
+    active
+    :loading="menu.loading"
+    :paragraph="{ rows: 6 }"
+    :title="false"
+    style="padding: 20px"
+  >
+    <Menu :items="menuList" mode="inline" @click="handleClick" />
+  </Skeleton>
 </template>
 
 <script>
@@ -22,7 +30,7 @@ const getItem = function ({ id, type, title, path, children, icon }) {
 
 <script setup>
 import { onMounted } from 'vue'
-import { Menu } from 'ant-design-vue'
+import { Menu, Skeleton } from 'ant-design-vue'
 import router from '@/router/index'
 import useAsyncMenuStore from '@/stores/async-routes'
 
