@@ -16,12 +16,11 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { storeToRefs } from 'pinia';
 import { ConfigProvider, theme } from 'ant-design-vue';
 import useSystemStore from '@/stores/system';
 
-const systemStore = useSystemStore();
-const isLight = computed(() => systemStore.theme !== 'dark');
+const { isLight } = storeToRefs(useSystemStore());
 </script>
 
 <style scoped></style>

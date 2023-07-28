@@ -1,15 +1,26 @@
-import { ref } from 'vue';
+import { computed } from 'vue';
 import { defineStore } from 'pinia';
+import { useToggle } from '@/hooks/index';
 
 const useSystemStore = defineStore('system', () => {
-  const theme = ref(localStorage.getItem('theme'));
+  const [theme, { set, toggle }] = useToggle('light', 'dark');
+
+  const currentTheme = localStorage.getItem('theme');
+  set(currentTheme !== 'dark' ? 'light' : 'dark');
+
+  const isLight = computed(() => theme.value !== 'dark');
 
   const setTheme = function (value) {
-    theme.value = value || theme.value === 'dark' ? 'light' : 'dark';
+    set(value);
     localStorage.setItem('theme', theme.value);
   };
 
-  return { theme, setTheme };
+  const toggleTheme = function () {
+    toggle();
+    localStorage.setItem('theme', theme.value);
+  };
+
+  return { theme, isLight, setTheme, toggleTheme };
 });
 
 export default useSystemStore;

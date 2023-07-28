@@ -9,8 +9,8 @@
     <div style="display: flex; padding-right: 16">
       <div class="header-actions-item">
         <Switch
-          :checked="systemStore.theme === 'dark'"
-          @click="systemStore.setTheme()"
+          :checked="!systemStore.isLight"
+          @click="systemStore.toggleTheme()"
           checkedChildren="🌜"
           unCheckedChildren="🌞"
         />
