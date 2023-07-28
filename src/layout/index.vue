@@ -2,7 +2,7 @@
   <Layout style="min-height: 100vh">
     <Sider :collapsed="collapsed" />
     <Layout>
-      <Header :collapsed="collapsed" @setCollapsed="(val) => (collapsed = val)" />
+      <Header :collapsed="collapsed" @setCollapsed="setCollapsed" />
       <Layout.Content>
         <RouterView v-if="!menu.loading" />
         <div v-else class="page-loading"><Spin tip="Loading"></Spin></div>
@@ -12,16 +12,16 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { Layout, Spin } from 'ant-design-vue';
 import Header from './Header/index.vue';
 import Sider from './Sider/index.vue';
 import useAsyncMenuStore from '@/stores/async-routes';
+import { useBoolean } from '@/hooks/index';
 
 const { menu } = storeToRefs(useAsyncMenuStore());
 
-const collapsed = ref(false);
+const [collapsed, { set: setCollapsed }] = useBoolean(false);
 </script>
 
 <style scoped>
