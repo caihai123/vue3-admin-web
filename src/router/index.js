@@ -34,6 +34,11 @@ export const asyncRoutes = [
     component: () => import('@/views/index.vue'),
   },
   {
+    path: '/permis/menu',
+    name: 'permisMenu',
+    component: () => import('@/views/permis/menu.vue'),
+  },
+  {
     path: '/403',
     name: '403',
     component: () => import('@/views/403.vue'),
