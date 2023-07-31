@@ -10,7 +10,7 @@ function useMemoizedFn(fn) {
     return unref(fn);
   });
 
-  return (...args) => fnRef.value(args);
+  return (...args) => fnRef.value(...args);
 }
 
 export default useMemoizedFn;
