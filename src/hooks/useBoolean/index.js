@@ -1,12 +1,11 @@
-import { ref } from 'vue';
+import useState from '../useState';
 
 const useBoolean = function (val = false) {
-  const value = ref(!!val);
+  const [value, set] = useState(!!val);
 
-  const toggle = () => (value.value = !value.value);
-  const setTrue = () => (value.value = true);
-  const setFalse = () => (value.value = false);
-  const set = (val) => (value.value = val);
+  const toggle = () => set(!value.value);
+  const setTrue = () => set(true);
+  const setFalse = () => set(false);
 
   return [value, { toggle, setTrue, setFalse, set }];
 };
