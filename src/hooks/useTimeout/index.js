@@ -1,15 +1,10 @@
 import { ref, watch, onMounted, onUnmounted, unref } from 'vue';
+import useMemoizedFn from '../useMemoizedFn';
 import { isNumber } from '../utils';
 
 const useTimeout = (fn, delay) => {
-  const timerCallback = unref(fn);
+  const timerCallback = useMemoizedFn(fn);
   const timerRef = ref(null);
-
-  const clear = () => {
-    if (timerRef.value) {
-      clearTimeout(timerRef.value);
-    }
-  };
 
   // 创建setTimeout
   const createTime = () => {
@@ -18,6 +13,12 @@ const useTimeout = (fn, delay) => {
       return;
     }
     timerRef.value = setTimeout(timerCallback, delayValue);
+  };
+
+  const clear = () => {
+    if (timerRef.value) {
+      clearTimeout(timerRef.value);
+    }
   };
 
   // 组件挂载完成后执行首次创建setTimeout
