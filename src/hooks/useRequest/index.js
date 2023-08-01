@@ -2,6 +2,7 @@ import { onMounted } from 'vue';
 import useState from '../useState';
 import { isFunction } from '../utils/index';
 import useMemoizedFn from '../useMemoizedFn';
+import useLoadingDelayAndKeep from '../useLoadingDelayAndKeep';
 
 const defaultOptions = {
   manual: false,
@@ -14,19 +15,20 @@ const defaultOptions = {
 
 export default function useRequest(fn, options) {
   const service = useMemoizedFn(fn);
+  const _options = Object.assign(defaultOptions, options);
 
   const [count, setCount] = useState(0);
   const [data, setData] = useState(undefined);
-  const [loading, setLoading] = useState(!options.manual);
+  const [loading, { setTrue: setLoadingTrue, setFalse: setLoadingFalse }] = useLoadingDelayAndKeep(
+    !_options.manual
+  );
   const [error, setError] = useState(undefined);
   const [params, setParams] = useState([]);
 
-  const _options = Object.assign(defaultOptions, options);
-
   onMounted(() => {
     if (!_options.manual) {
-      const params = params || _options.defaultParams || [];
-      run(...params);
+      const args = params.value || _options.defaultParams || [];
+      run(...args);
     }
   });
 
@@ -35,7 +37,7 @@ export default function useRequest(fn, options) {
     setCount(count.value + 1);
     const currentCount = count.value;
 
-    setLoading(true);
+    setLoadingTrue();
     setParams(args);
     _options.onBefore?.(args);
 
@@ -55,7 +57,7 @@ export default function useRequest(fn, options) {
           reject(error);
         })
         .finally(() => {
-          setLoading(false);
+          setLoadingFalse();
           _options.onFinally?.(args, data, error);
         });
     });
@@ -85,7 +87,7 @@ export default function useRequest(fn, options) {
   // 忽略当前 Promise 的响应
   const cancel = function () {
     setCount(count.value + 1);
-    setLoading(false);
+    setLoadingFalse();
   };
 
   return {
