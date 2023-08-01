@@ -66,7 +66,7 @@ export default function useLoadingDelayAndKeep(val, options) {
   const timerRef = ref(null);
   const [timer, setTimer] = useState();
 
-  const _options = { delay: 400, keep: 1000, ...options };
+  const _options = { delay: 300, keep: 500, ...options };
 
   const setTrue = useMemoizedFn(() => {
     if (timerRef.value) {
