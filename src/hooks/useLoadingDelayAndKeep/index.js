@@ -6,6 +6,8 @@ import useState from '../useState';
 // 使用场景：有些时候，当请求返回足够快的情况下，loading 可能会在短时间内完成 false -> true -> false 状态的切换，
 // 这时候，加载动画可能会出现闪烁的情况（特别是占满一整屏的动画），这给会用户带来糟糕的体验。
 
+const getTime = () => new Date().getTime(); // 获取当前时间戳
+
 // 延迟 loading变成 true,如果在 delay时间内调用 setFalse，则 loading不会变成 true，有效防止闪烁。
 // 处理逻辑：如果请求返回过快，则直接不显示loading
 export const useLoadingDelay = function (val, delay = 500) {
@@ -41,13 +43,13 @@ export const useLoadingKeep = function (val, delay = 500) {
       timerRef.value = null;
     }
     set(true);
-    setTimer(new Date().getTime());
+    setTimer(getTime());
   });
 
   const setFalse = useMemoizedFn(() => {
     if (timerRef.value) return; // 感觉没必要重复设置
 
-    const currentTime = new Date().getTime();
+    const currentTime = getTime();
     const formerTime = timer.value || currentTime;
     const runTime = currentTime - formerTime; // loading已经运行的时间
     timerRef.value = setTimeout(() => set(false), runTime > delay ? 0 : delay - runTime);
@@ -61,7 +63,7 @@ export const useLoadingKeep = function (val, delay = 500) {
 // 所以他们两个可以中和一下，最终的表现是：
 //  如果在指定的时间内完成了请求，那就不展示 loading 动画，超过指定时间后才进行展示
 //  如果展示了 loading 动画，那至少要展示足够长的时间，不能一闪而过
-export default function useLoadingDelayAndKeep(val, options) {
+export default function useLoadingDelayAndKeep(val = false, options) {
   const [loading, { set }] = useBoolean(val);
   const timerRef = ref(null);
   const [timer, setTimer] = useState();
@@ -75,7 +77,7 @@ export default function useLoadingDelayAndKeep(val, options) {
     }
     timerRef.value = setTimeout(() => {
       set(true);
-      setTimer(new Date().getTime());
+      setTimer(getTime());
     }, _options.delay || 0);
   });
 
@@ -85,7 +87,7 @@ export default function useLoadingDelayAndKeep(val, options) {
       timerRef.value = null;
     }
     const { keep = 0 } = _options;
-    const currentTime = new Date().getTime();
+    const currentTime = getTime();
     const formerTime = timer.value || currentTime;
     const runTime = currentTime - formerTime; // loading已经运行的时间
     timerRef.value = setTimeout(() => set(false), runTime > keep ? 0 : keep - runTime);
