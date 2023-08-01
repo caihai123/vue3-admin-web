@@ -6,6 +6,7 @@ import useInterval from './useInterval';
 import useTimeout from './useTimeout';
 import useSelections from './useSelections';
 import useDebounceFn from './useDebounceFn';
+import useRequest from '../useRequest';
 
 export {
   useState,
@@ -16,4 +17,5 @@ export {
   useTimeout,
   useSelections,
   useDebounceFn,
+  useRequest,
 };
