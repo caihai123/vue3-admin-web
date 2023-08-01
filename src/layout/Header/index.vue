@@ -46,6 +46,7 @@ const props = defineProps({
   padding: 0;
   position: sticky;
   top: 0;
+  z-index: 9;
 }
 
 .trigger {
