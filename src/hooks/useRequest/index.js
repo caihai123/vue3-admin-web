@@ -14,6 +14,7 @@ const defaultOptions = {
   loadingDelay: 300,
   loadingKeep: 500,
   refreshDeps: [],
+  refreshDepsAction: undefined, // 依赖刷新动作
 };
 
 export default function useRequest(fn, options) {
@@ -95,7 +96,13 @@ export default function useRequest(fn, options) {
   };
 
   // 检测依赖刷新
-  watch(options.refreshDeps, () => refresh());
+  watch(options.refreshDeps, () => {
+    if (_options.refreshDepsAction) {
+      _options.refreshDepsAction();
+    } else {
+      refresh();
+    }
+  });
 
   return {
     data,
