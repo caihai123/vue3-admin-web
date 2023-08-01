@@ -8,6 +8,7 @@ import useSelections from './useSelections';
 import useDebounceFn from './useDebounceFn';
 import useRequest from './useRequest';
 import useLoadingDelayAndKeep, { useLoadingDelay, useLoadingKeep } from './useLoadingDelayAndKeep';
+import usePagination from './usePagination';
 
 export {
   useState,
@@ -22,4 +23,5 @@ export {
   useLoadingDelay,
   useLoadingKeep,
   useLoadingDelayAndKeep,
+  usePagination,
 };
