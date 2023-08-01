@@ -1,4 +1,4 @@
-import { onMounted } from 'vue';
+import { onMounted, watch } from 'vue';
 import useState from '../useState';
 import { isFunction } from '../utils/index';
 import useMemoizedFn from '../useMemoizedFn';
@@ -13,6 +13,7 @@ const defaultOptions = {
   onFinally: () => null,
   loadingDelay: 300,
   loadingKeep: 500,
+  refreshDeps: [],
 };
 
 export default function useRequest(fn, options) {
@@ -73,12 +74,12 @@ export default function useRequest(fn, options) {
 
   // 使用上一次的 params，重新调用 run
   const refresh = function () {
-    run(...params);
+    run(...params.value);
   };
 
   // 使用上一次的 params，重新调用 runAsync
   const refreshAsync = function () {
-    runAsync(...params);
+    runAsync(...params.value);
   };
 
   // 直接修改 data
@@ -92,6 +93,9 @@ export default function useRequest(fn, options) {
     setCount(count.value + 1);
     setLoadingFalse();
   };
+
+  // 检测依赖刷新
+  watch(options.refreshDeps, () => refresh());
 
   return {
     data,
