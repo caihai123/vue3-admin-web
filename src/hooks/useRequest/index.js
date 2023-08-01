@@ -22,7 +22,7 @@ export default function useRequest(fn, options) {
   const [count, setCount] = useState(0);
   const [data, setData] = useState(undefined);
   const [loading, { setTrue: setLoadingTrue, setFalse: setLoadingFalse }] = useLoadingDelayAndKeep(
-    !_options.manual,
+    false,
     { delay: _options.loadingDelay, keep: _options.loadingKeep }
   );
   const [error, setError] = useState(undefined);
