@@ -6,7 +6,8 @@ import useInterval from './useInterval';
 import useTimeout from './useTimeout';
 import useSelections from './useSelections';
 import useDebounceFn from './useDebounceFn';
-import useRequest from '../useRequest';
+import useRequest from './useRequest';
+import useLoadingDelayAndKeep, { useLoadingDelay, useLoadingKeep } from './useLoadingDelayAndKeep';
 
 export {
   useState,
@@ -18,4 +19,7 @@ export {
   useSelections,
   useDebounceFn,
   useRequest,
+  useLoadingDelay,
+  useLoadingKeep,
+  useLoadingDelayAndKeep,
 };
