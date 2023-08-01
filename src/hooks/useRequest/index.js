@@ -11,6 +11,8 @@ const defaultOptions = {
   onSuccess: () => null,
   onError: () => null,
   onFinally: () => null,
+  loadingDelay: 300,
+  loadingKeep: 500,
 };
 
 export default function useRequest(fn, options) {
@@ -20,7 +22,8 @@ export default function useRequest(fn, options) {
   const [count, setCount] = useState(0);
   const [data, setData] = useState(undefined);
   const [loading, { setTrue: setLoadingTrue, setFalse: setLoadingFalse }] = useLoadingDelayAndKeep(
-    !_options.manual
+    !_options.manual,
+    { delay: _options.loadingDelay, keep: _options.loadingKeep }
   );
   const [error, setError] = useState(undefined);
   const [params, setParams] = useState([]);
