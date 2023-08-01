@@ -50,7 +50,7 @@ export default function useRequest(fn, options) {
           if (currentCount !== count.value) return;
           setData(data);
           setError(undefined);
-          _options.onBefore?.(data, args);
+          _options.onSuccess?.(data, args);
           resolve(data);
         })
         .catch((error) => {
