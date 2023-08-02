@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { message } from 'ant-design-vue';
 
 const instance = axios.create({
   timeout: 5000,
@@ -28,12 +29,13 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   function (response) {
     // 对响应数据做点什么
-    const { status } = response.data;
+    const { status, msg } = response.data;
     // 请求成功时进行响应处理
     switch (status) {
       case 'success':
         return response.data;
       default:
+        message.error(msg);
         return Promise.reject(response);
     }
   },
@@ -41,8 +43,10 @@ instance.interceptors.response.use(
     // 对响应错误做点什么
     switch (error.status) {
       case 401:
+        message.error('未登录或登录过期，请重新登录！');
         break;
       default:
+        message.error(error.message);
         break;
     }
     return Promise.reject(error);
