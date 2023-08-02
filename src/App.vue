@@ -1,5 +1,6 @@
 <template>
   <ConfigProvider
+    :locale="zhCN"
     :theme="{
       token: {
         borderRadius: 2,
@@ -18,6 +19,7 @@
 <script setup>
 import { storeToRefs } from 'pinia';
 import { ConfigProvider, theme } from 'ant-design-vue';
+import zhCN from 'ant-design-vue/es/locale/zh_CN';
 import useSystemStore from '@/stores/system';
 
 const { isLight } = storeToRefs(useSystemStore());
