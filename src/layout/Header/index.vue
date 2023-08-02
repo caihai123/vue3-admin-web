@@ -6,7 +6,15 @@
         <MenuFoldOutlined v-else />
       </div>
     </div>
-    <div style="display: flex; padding-right: 16">
+    <div style="display: flex; padding-right: 16px">
+      <div class="header-actions-item">
+        <LockOutlined />
+      </div>
+
+      <div class="header-actions-item">
+        <FullscreenOutlined />
+      </div>
+
       <div class="header-actions-item">
         <Switch
           :checked="!systemStore.isLight"
@@ -15,12 +23,54 @@
           unCheckedChildren="🌞"
         />
       </div>
+
+      <Dropdown>
+        <div class="header-actions-item">
+          <Avatar
+            src="https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png"
+            size="small"
+          />
+          <span style="margin-left: 8px; font-size: 14px">Cai Hai</span>
+        </div>
+        <template #overlay>
+          <Menu>
+            <Menu.Item>
+              <template #icon>
+                <UserOutlined />
+              </template>
+              个人中心
+            </Menu.Item>
+            <Menu.Item>
+              <template #icon>
+                <SettingOutlined />
+              </template>
+              个人设置
+            </Menu.Item>
+            <Menu.Divider />
+            <Menu.Item>
+              <template #icon>
+                <LoginOutlined />
+              </template>
+              退出登录
+            </Menu.Item>
+          </Menu>
+        </template>
+      </Dropdown>
     </div>
   </Header>
 </template>
 
 <script setup>
-import { Layout, theme, Switch } from 'ant-design-vue';
+import { Layout, theme, Switch, Dropdown, Avatar, Menu } from 'ant-design-vue';
+import {
+  LockOutlined,
+  FullscreenOutlined,
+  UserOutlined,
+  SettingOutlined,
+  LoginOutlined,
+  MenuUnfoldOutlined,
+  MenuFoldOutlined,
+} from '@ant-design/icons-vue';
 import useSystemStore from '@/stores/system';
 
 const { Header } = Layout;
@@ -29,7 +79,6 @@ const { token } = theme.useToken();
 const systemStore = useSystemStore();
 
 // trigger 按钮相关
-import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue';
 const props = defineProps({
   collapsed: {
     type: Boolean,
@@ -73,7 +122,7 @@ const props = defineProps({
   cursor: pointer;
   transition: all 0.3s;
 }
-.header-actions-item::hover {
+.header-actions-item:hover {
   background-color: rgba(0, 0, 0, 0.03);
 }
 </style>
