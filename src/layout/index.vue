@@ -3,7 +3,7 @@
     <Sider :collapsed="collapsed" />
     <Layout>
       <Header :collapsed="collapsed" @setCollapsed="setCollapsed" />
-      <Layout.Content>
+      <Layout.Content style="margin: 20px">
         <RouterView v-if="!menu.loading" />
         <div v-else class="page-loading"><Spin tip="Loading"></Spin></div>
       </Layout.Content>
