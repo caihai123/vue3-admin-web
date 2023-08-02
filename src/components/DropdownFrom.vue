@@ -3,7 +3,7 @@
     ref="formRef"
     class="dropdown-form"
     layout="inline"
-    :style="{ height: visible ? 'auto' : 48, paddingRight: visible ? 0 : 188 }"
+    :style="{ height: visible ? 'auto' : '64px', paddingRight: visible ? '0px' : '188px' }"
   >
     <slot />
     <Form.Item class="actions">
@@ -65,7 +65,7 @@ const reset = function () {
   vertical-align: top;
   margin-bottom: 16px;
 }
-.dropdown-form .ant-form-item {
+.dropdown-form >>> .ant-form-item {
   margin-bottom: 16px;
 }
 
