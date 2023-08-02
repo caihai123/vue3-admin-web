@@ -39,6 +39,11 @@ export const asyncRoutes = [
     component: () => import('@/views/permis/menu.vue'),
   },
   {
+    path: '/permis/role',
+    name: 'permisRole',
+    component: () => import('@/views/permis/role.vue'),
+  },
+  {
     path: '/403',
     name: '403',
     component: () => import('@/views/403.vue'),
