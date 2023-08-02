@@ -28,7 +28,7 @@ export default function useRequest(fn, options) {
     { delay: _options.loadingDelay, keep: _options.loadingKeep }
   );
   const [error, setError] = useState(undefined);
-  const [params, setParams] = useState([]);
+  const [params, setParams] = useState();
 
   onMounted(() => {
     if (!_options.manual) {
