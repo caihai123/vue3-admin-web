@@ -1,4 +1,4 @@
-import { computed } from 'vue';
+import { computed, reactive } from 'vue';
 import useMemoizedFn from '../useMemoizedFn';
 import useRequest from '../useRequest';
 
@@ -14,9 +14,9 @@ const usePagination = function (fn, options) {
     ...rest,
   });
 
-  const current = computed(() => (result.params[0] || {}).current);
-  const pageSize = computed(() => (result.params[0] || {}).pageSize || defaultPageSize);
-  const total = computed(() => result.data?.total || 0);
+  const current = computed(() => (result.params.value?.[0] || {}).current);
+  const pageSize = computed(() => (result.params.value?.[0] || {}).pageSize || defaultPageSize);
+  const total = computed(() => result.data.value?.total || 0);
   const totalPage = computed(() => Math.ceil(total.value / pageSize.value));
 
   const onChange = (c, p) => {
@@ -49,7 +49,7 @@ const usePagination = function (fn, options) {
 
   return {
     ...result,
-    pagination: {
+    pagination: reactive({
       current,
       pageSize,
       total,
@@ -57,7 +57,7 @@ const usePagination = function (fn, options) {
       onChange: useMemoizedFn(onChange),
       changeCurrent: useMemoizedFn(changeCurrent),
       changePageSize: useMemoizedFn(changePageSize),
-    },
+    }),
   };
 };
 
