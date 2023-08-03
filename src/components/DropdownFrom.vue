@@ -73,6 +73,6 @@ const reset = function () {
   position: absolute;
   right: -16px;
   bottom: 0;
-  z-index: 10;
+  z-index: 8;
 }
 </style>
