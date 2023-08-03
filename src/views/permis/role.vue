@@ -10,7 +10,15 @@
     </DropdownFrom>
   </Card>
 
-  <Card>
+  <Card bodyStyle="padding-top: 16px; padding-bottom: 0px">
+    <div class="tools-bar">
+      <div class="header-title">角色列表</div>
+      <div class="tool-right">
+        <Space>
+          <Button type="primary" :icon="h(PlusOutlined)">新增</Button>
+        </Space>
+      </div>
+    </div>
     <Table
       rowKey="id"
       :dataSource="data?.list"
@@ -33,9 +41,9 @@
         </template>
         <template v-else-if="column.key === 'action'">
           <Space>
-            <Button type="primary" ghost size="small"> 编辑 </Button>
-            <Button type="primary" size="small"> 授权 </Button>
-            <Button type="primary" danger size="small"> 删除 </Button>
+            <Button type="primary" ghost size="small">编辑</Button>
+            <Button type="primary" size="small">授权</Button>
+            <Button type="primary" danger size="small">删除</Button>
           </Space>
         </template>
       </template>
@@ -44,11 +52,12 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue';
+import { reactive, h } from 'vue';
 import { Card, Table, Space, Button, Form, Input, Switch } from 'ant-design-vue';
 import DropdownFrom from '@/components/DropdownFrom.vue';
 import { usePagination, useState } from '@/hooks/index';
 import axios from '@/utils/axios';
+import { PlusOutlined } from '@ant-design/icons-vue';
 
 const columns = [
   {
@@ -94,4 +103,22 @@ const { data, pagination, loading } = usePagination(
 );
 </script>
 
-<style scoped></style>
+<style scoped>
+.tools-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+}
+
+.tools-bar .header-title {
+  font-size: 16px;
+}
+
+.tools-bar .tool-right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+}
+</style>
