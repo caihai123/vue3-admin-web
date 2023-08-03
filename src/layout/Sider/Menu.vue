@@ -1,13 +1,8 @@
 <template>
-  <Skeleton
-    active
-    :loading="menu.loading"
-    :paragraph="{ rows: 6 }"
-    :title="false"
-    style="padding: 20px"
-  >
-    <Menu :items="menuList" mode="inline" :selectedKeys="[activeMenu]" @click="handleClick" />
-  </Skeleton>
+  <div style="padding: 20px" v-if="menu.loading">
+    <Skeleton active :loading="true" :paragraph="{ rows: 6 }" :title="false"> </Skeleton>
+  </div>
+  <Menu v-else :items="menuList" mode="inline" :selectedKeys="[activeMenu]" @click="handleClick" />
 </template>
 
 <script>
