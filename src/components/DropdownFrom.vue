@@ -1,30 +1,32 @@
 <template>
-  <Form
-    ref="formRef"
-    class="dropdown-form"
-    layout="inline"
-    :style="{ height: visible ? 'auto' : '64px', paddingRight: visible ? '0px' : '188px' }"
-  >
-    <slot />
-    <Form.Item class="actions">
-      <Space>
-        <Button type="primary" htmlType="submit" @click="submitForm"> 查询 </Button>
-        <Button @click="reset">重置</Button>
-        <Button v-if="visible" type="link" style="padding: 0" @click="setFalse">
-          收起 <CaretUpOutlined style="margin-inline-start: 0" />
-        </Button>
-        <Button v-else type="link" style="padding: 0" @click="setTrue">
-          展开 <CaretDownOutlined style="margin-inline-start: 0" />
-        </Button>
-      </Space>
-    </Form.Item>
-  </Form>
+  <Card :bodyStyle="{ paddingTop: 0, paddingBottom: 0 }">
+    <Form
+      ref="formRef"
+      class="dropdown-form"
+      layout="inline"
+      :style="{ height: visible ? 'auto' : '64px', paddingRight: visible ? '0px' : '188px' }"
+    >
+      <slot />
+      <Form.Item class="actions">
+        <Space>
+          <Button type="primary" htmlType="submit" @click="submitForm"> 查询 </Button>
+          <Button @click="reset">重置</Button>
+          <Button v-if="visible" type="link" style="padding: 0" @click="setFalse">
+            收起 <CaretUpOutlined style="margin-inline-start: 0" />
+          </Button>
+          <Button v-else type="link" style="padding: 0" @click="setTrue">
+            展开 <CaretDownOutlined style="margin-inline-start: 0" />
+          </Button>
+        </Space>
+      </Form.Item>
+    </Form>
+  </Card>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import { useBoolean } from '@/hooks/index';
-import { Form, Space, Button } from 'ant-design-vue';
+import { Card, Form, Space, Button } from 'ant-design-vue';
 import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons-vue';
 
 const emit = defineEmits(['finish', 'finishFailed']);

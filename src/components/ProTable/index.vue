@@ -1,27 +1,25 @@
 <template>
-  <Card :bodyStyle="{ paddingTop: 0, paddingBottom: 0 }">
-    <DropdownFrom :model="formState" @finish="(values) => setParams(values)">
-      <Form.Item
-        v-for="item in columns.filter((item) => item.hideInSearch !== true)"
-        :key="getRowkey(item)"
-        :label="item.title"
-        :name="item.dataIndex"
-      >
-        <Select
-          v-if="item.type === 'select'"
-          :placeholder="`请选择${item.title}`"
-          :options="item.options"
-          style="width: 183px"
-          v-model:value="formState[item.dataIndex]"
-        />
-        <Input
-          v-else
-          :placeholder="`请输入${item.title}`"
-          v-model:value="formState[item.dataIndex]"
-        />
-      </Form.Item>
-    </DropdownFrom>
-  </Card>
+  <DropdownFrom :model="formState" @finish="(values) => setParams(values)">
+    <Form.Item
+      v-for="item in columns.filter((item) => item.hideInSearch !== true)"
+      :key="getRowkey(item)"
+      :label="item.title"
+      :name="item.dataIndex"
+    >
+      <Select
+        v-if="item.type === 'select'"
+        :placeholder="`请选择${item.title}`"
+        :options="item.options"
+        style="width: 183px"
+        v-model:value="formState[item.dataIndex]"
+      />
+      <Input
+        v-else
+        :placeholder="`请输入${item.title}`"
+        v-model:value="formState[item.dataIndex]"
+      />
+    </Form.Item>
+  </DropdownFrom>
 
   <div style="margin-top: 16px">
     <Card :bodyStyle="{ paddingTop: 16, paddingBottom: props.pagination ? 0 : 24 }">
