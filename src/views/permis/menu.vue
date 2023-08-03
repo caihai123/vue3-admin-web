@@ -1,48 +1,38 @@
 <template>
-  <Card style="margin-bottom: 16px" bodyStyle="padding-top: 0px;padding-bottom: 0">
-    <DropdownFrom :model="formState" @finish="(values) => setParams(values)">
-      <Form.Item label="名称" name="title">
-        <Input v-model:value="formState.title" placeholder="请输入名称" />
-      </Form.Item>
-      <Form.Item label="路径" name="path">
-        <Input v-model:value="formState.path" placeholder="请输入路径" />
-      </Form.Item>
-    </DropdownFrom>
-  </Card>
-
-  <Card>
-    <Table
-      rowKey="id"
-      :dataSource="data"
-      :columns="columns"
-      :loading="loading"
-      :pagination="false"
-      bordered
-    >
-      <template #bodyCell="{ column, record }">
-        <template v-if="column.key === 'tags'">
-          <Tag v-if="record.type === '1'" color="#87d068">菜单</Tag>
-          <Tag v-if="record.type === '2'" color="#108ee9">目录</Tag>
-        </template>
-
-        <template v-else-if="column.key === 'action'">
-          <Space>
-            <Button type="primary" ghost size="small">编辑</Button>
-            <Button type="primary" size="small">新增下级</Button>
-            <Button type="primary" danger size="small">删除</Button>
-          </Space>
-        </template>
+  <ProTable
+    rowKey="id"
+    :columns="columns"
+    :request="request"
+    headerTitle="菜单列表"
+    :pagination="false"
+  >
+    <template #bodyCell="{ column, record }">
+      <template v-if="column?.key === 'tags'">
+        <Tag v-if="record.type === '1'" color="#87d068">菜单</Tag>
+        <Tag v-if="record.type === '2'" color="#108ee9">目录</Tag>
       </template>
-    </Table>
-  </Card>
+
+      <template v-else-if="column?.key === 'action'">
+        <Space>
+          <Button type="primary" ghost size="small">编辑</Button>
+          <Button type="primary" size="small">新增下级</Button>
+          <Button type="primary" danger size="small">删除</Button>
+        </Space>
+      </template>
+    </template>
+
+    <template #toolBar>
+      <Button type="primary" :icon="h(PlusOutlined)">新增</Button>
+    </template>
+  </ProTable>
 </template>
 
 <script setup>
-import { reactive } from 'vue';
-import { Card, Table, Tag, Space, Button, Form, Input } from 'ant-design-vue';
-import { useRequest, useState } from '@/hooks/index';
+import { h } from 'vue';
+import { Tag, Space, Button } from 'ant-design-vue';
 import axios from '@/utils/axios';
-import DropdownFrom from '@/components/DropdownFrom.vue';
+import ProTable from '@/components/ProTable/index.vue';
+import { PlusOutlined } from '@ant-design/icons-vue';
 
 const columns = [
   {
@@ -56,36 +46,32 @@ const columns = [
   {
     title: '图标',
     dataIndex: 'icon',
+    hideInSearch: true,
   },
   {
     title: '类型',
     key: 'type',
+    type: 'select',
+    options: [
+      { label: '菜单', value: '1' },
+      { label: '目录', value: '2' },
+    ],
   },
   {
     title: '操作',
     key: 'action',
     width: 100,
     fixed: 'right',
+    hideInSearch: true,
   },
 ];
 
-const formState = reactive({
-  title: '',
-  path: '',
-});
-const [params, setParams] = useState({});
-
-const { data, loading } = useRequest(
-  () => {
-    // 正常情况会将params作为参数传递
-    return axios.get('/api/get-menu-all').then((value) => {
-      return value.result;
-    });
-  },
-  {
-    refreshDeps: [params],
-  }
-);
+const request = (params) =>
+  axios.get('/api/get-menu-all', params).then((value) => {
+    return {
+      list: value.result || [],
+    };
+  });
 </script>
 
 <style scoped></style>
