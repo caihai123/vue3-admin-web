@@ -24,7 +24,7 @@
   </Card>
 
   <div style="margin-top: 16px">
-    <Card :bodyStyle="{ paddingTop: 16, paddingBottom: 0 }">
+    <Card :bodyStyle="{ paddingTop: 16, paddingBottom: props.pagination ? 0 : 24 }">
       <div class="tools-bar">
         <div class="header-title">{{ headerTitle }}</div>
         <div class="tool-right">
@@ -84,15 +84,20 @@
           })
         "
         :loading="loading"
-        :pagination="{
-          current: pagination.current,
-          pageSize: pagination.pageSize,
-          total: pagination.total,
-          showSizeChanger: true,
-          showQuickJumper: true,
-          showTotal: (total, range) => `第 ${range.join('-')} 条/共 ${total} 条`,
-          onChange: pagination.onChange,
-        }"
+        :pagination="
+          props.pagination
+            ? {
+                current: pagination.current,
+                pageSize: pagination.pageSize,
+                total: pagination.total,
+                showSizeChanger: true,
+                showQuickJumper: true,
+                showTotal: (total, range) => `第 ${range.join('-')} 条/共 ${total} 条`,
+                onChange: pagination.onChange,
+                ...props.pagination,
+              }
+            : false
+        "
         bordered
         :size="tableSize"
       >
@@ -128,6 +133,10 @@ const props = defineProps({
   headerTitle: {
     type: String,
     required: true,
+  },
+  pagination: {
+    type: [Boolean, Object],
+    default: true,
   },
 });
 
