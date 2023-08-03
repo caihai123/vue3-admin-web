@@ -158,6 +158,8 @@ const { data, pagination, loading, refresh } = usePagination(
   ({ current, pageSize }) => props.request(params, { current, pageSize }),
   {
     refreshDeps: [params],
+    defaultCurrent: props.pagination?.current || 1,
+    defaultPageSize: props.pagination?.pageSize || 10,
   }
 );
 
