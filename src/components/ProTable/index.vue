@@ -1,30 +1,19 @@
 <template>
   <DropdownFrom :model="formState" @finish="(values) => setParams(values)">
-    <Form.Item
+    <FormItem
       v-for="item in columns.filter((item) => item.hideInSearch !== true)"
       :key="getRowkey(item)"
-      :label="item.title"
-      :name="item.dataIndex"
-    >
-      <Select
-        v-if="item.type === 'select'"
-        :placeholder="`请选择${item.title}`"
-        :options="item.options"
-        style="width: 183px"
-        v-model:value="formState[item.dataIndex]"
-      />
-      <Input
-        v-else
-        :placeholder="`请输入${item.title}`"
-        v-model:value="formState[item.dataIndex]"
-      />
-    </Form.Item>
+      :item="item"
+      :formState="formState"
+    />
   </DropdownFrom>
 
   <div style="margin-top: 16px">
     <Card :bodyStyle="{ paddingTop: 16, paddingBottom: props.pagination ? 0 : 24 }">
       <div class="tools-bar">
-        <div class="header-title">{{ headerTitle }}</div>
+        <div class="header-title">
+          <slot name="headerTitle">{{ headerTitle }}</slot>
+        </div>
         <div class="tool-right">
           <slot name="toolBar"></slot>
 
@@ -109,11 +98,12 @@
 
 <script setup>
 import { reactive, computed } from 'vue';
-import { Card, Table, Form, Select, Input, Dropdown, Tooltip, Menu } from 'ant-design-vue';
+import { Card, Table, Dropdown, Tooltip, Menu } from 'ant-design-vue';
 import { usePagination, useState } from '@/hooks/index';
 import DropdownFrom from '@/components/DropdownFrom.vue';
 import { ReloadOutlined, ColumnHeightOutlined, SettingOutlined } from '@ant-design/icons-vue';
 import ColumnSetting from './SettingOutlined.vue';
+import FormItem from './FormItem/index.vue';
 
 const props = defineProps({
   columns: {

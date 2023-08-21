@@ -50,7 +50,7 @@ const columns = [
   },
   {
     title: '类型',
-    key: 'type',
+    dataIndex: 'type',
     type: 'select',
     options: [
       { label: '菜单', value: '1' },

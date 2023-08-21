@@ -5,6 +5,7 @@
       class="dropdown-form"
       layout="inline"
       :style="{ height: visible ? 'auto' : '64px', paddingRight: visible ? '0px' : '188px' }"
+      :model="props.model"
     >
       <slot />
       <Form.Item class="actions">
@@ -32,6 +33,13 @@ import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons-vue';
 const emit = defineEmits(['finish', 'finishFailed']);
 
 const formRef = ref();
+
+const props = defineProps({
+  model: {
+    type: Object,
+    required: true,
+  },
+});
 
 const [visible, { setTrue, setFalse }] = useBoolean(false);
 
