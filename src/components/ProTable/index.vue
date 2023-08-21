@@ -10,7 +10,10 @@
 
   <div style="margin-top: 16px">
     <Card :bodyStyle="{ paddingTop: 16, paddingBottom: props.pagination ? 0 : 24 }">
-      <div class="tools-bar">
+      <div
+        class="tools-bar"
+        :style="{ display: selectedRowKeys.length > 0 ? 'none' : '', color: token.colorText }"
+      >
         <div class="header-title">
           <slot name="headerTitle">{{ headerTitle }}</slot>
         </div>
@@ -61,6 +64,26 @@
           </div>
         </div>
       </div>
+
+      <div
+        v-if="props.showBatchBar"
+        class="batch-bar"
+        :style="{
+          display: selectedRowKeys.length > 0 ? '' : 'none',
+          color: token.colorText,
+          backgroundColor: token.controlItemBgActive,
+          borderRadius: token.borderRadius,
+        }"
+      >
+        <div>
+          <span>已选 {{ selectedRowKeys.length }} 项</span>
+          <Button type="link" @click="() => setSelectedRowKeys([])"> 取消选择 </Button>
+        </div>
+        <Space>
+          <slot name="batchBar" :selectedRowKeys="selectedRowKeys"></slot>
+        </Space>
+      </div>
+
       <Table
         :rowKey="props.rowKey"
         :dataSource="data?.list"
@@ -87,6 +110,7 @@
         "
         bordered
         :size="tableSize"
+        :rowSelection="rowSelection"
       >
         <template #bodyCell="{ column, record }">
           <slot name="bodyCell" :column="column" :record="record"></slot>
@@ -98,7 +122,7 @@
 
 <script setup>
 import { reactive, computed } from 'vue';
-import { Card, Table, Dropdown, Tooltip, Menu } from 'ant-design-vue';
+import { Card, Table, Dropdown, Tooltip, Menu, theme, Button, Space } from 'ant-design-vue';
 import { usePagination, useState } from '@/hooks/index';
 import DropdownFrom from '@/components/DropdownFrom.vue';
 import { ReloadOutlined, ColumnHeightOutlined, SettingOutlined } from '@ant-design/icons-vue';
@@ -126,11 +150,22 @@ const props = defineProps({
     type: [Boolean, Object],
     default: true,
   },
+  // 是否显示批量操作栏
+  showBatchBar: {
+    type: [Boolean],
+    default: false,
+  },
+  tableRowSelection: {
+    type: Object,
+    default: () => null,
+  },
 });
 
 const getRowkey = function (row) {
   return row.key || row.dataIndex;
 };
+
+const { token } = theme.useToken();
 
 const formState = reactive(
   Object.fromEntries(
@@ -140,6 +175,7 @@ const formState = reactive(
   )
 );
 const [params, setParams] = useState({});
+
 // 表格上使用的columns
 const tableColumns = computed(() => props.columns.filter((item) => item.hideInTable !== true));
 const { data, pagination, loading, refresh } = usePagination(
@@ -150,6 +186,20 @@ const { data, pagination, loading, refresh } = usePagination(
     defaultPageSize: props.pagination?.pageSize || 10,
   }
 );
+
+// 当前选中的keys
+const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+const rowSelection = computed(() => {
+  return props.showBatchBar
+    ? {
+        type: 'checkbox',
+        selectedRowKeys,
+        onChange: (keys) => setSelectedRowKeys(keys),
+        preserveSelectedRowKeys: true,
+        ...props.tableRowSelection,
+      }
+    : undefined;
+});
 
 const [tableSize, setTableSize] = useState('large');
 // 表格设置栏
@@ -189,5 +239,12 @@ const [configkeys, setConfigkeys] = useState(tableColumns.value.map((item) => ge
 }
 .tools-bar .toolbar-setting .toolbar-setting-item:hover {
   color: #1677ff;
+}
+
+.batch-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
 }
 </style>
